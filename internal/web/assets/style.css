@@ -1,0 +1,166 @@
+:root {
+  --bg: #fbfbfa;
+  --panel: #ffffff;
+  --ink: #1c1b19;
+  --muted: #6c6a66;
+  --line: #e4e2dd;
+  --accent: #2f6f4e;
+  --warn: #a5561b;
+  --bad: #a32c2c;
+  --gap: rgba(120, 116, 110, .13);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #16181a;
+    --panel: #1d2023;
+    --ink: #e8e6e3;
+    --muted: #9a9792;
+    --line: #2c3034;
+    --accent: #6bbf8e;
+    --warn: #e0a067;
+    --bad: #e08585;
+    --gap: rgba(200, 200, 200, .10);
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  padding-bottom: 3rem;
+}
+
+header {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--line);
+  background: var(--panel);
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+
+h1 {
+  font-size: 1rem;
+  margin: 0;
+  letter-spacing: .02em;
+  font-weight: 650;
+}
+
+.net { color: var(--muted); font-variant-numeric: tabular-nums; flex: 1; }
+
+nav { display: flex; gap: .25rem; }
+
+nav button {
+  font: inherit;
+  color: var(--muted);
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: .2rem .55rem;
+  cursor: pointer;
+}
+nav button.on { color: var(--ink); border-color: var(--muted); }
+nav button:hover { color: var(--ink); }
+
+main { padding: 1.25rem; max-width: 1100px; margin: 0 auto; display: grid; gap: 1.25rem; }
+
+.tiles { display: grid; gap: .75rem; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+
+.tile {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: .8rem .9rem;
+}
+.tile .label { color: var(--muted); font-size: .78rem; text-transform: uppercase; letter-spacing: .06em; }
+.tile .value { font-size: 1.5rem; font-variant-numeric: tabular-nums; margin-top: .15rem; }
+.tile .detail { color: var(--muted); font-size: .8rem; font-variant-numeric: tabular-nums; }
+.tile.warn .value { color: var(--warn); }
+.tile.bad .value { color: var(--bad); }
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: .9rem 1rem 1.1rem;
+}
+
+h2 { font-size: .85rem; margin: 0 0 .8rem; font-weight: 650; letter-spacing: .02em; }
+h2 .sub { color: var(--muted); font-weight: 400; margin-left: .4rem; }
+
+.chart { width: 100%; overflow-x: auto; }
+
+/* uPlot's own legend lists every series, which would mean two entries per
+   target once the p99 band series exist. This one names each target once. */
+.legend { display: flex; flex-wrap: wrap; gap: .25rem 1rem; margin: -.3rem 0 .7rem; }
+.legend span { display: inline-flex; align-items: center; gap: .35rem; color: var(--muted); font-size: .8rem; }
+.legend i { width: .7rem; height: .7rem; border-radius: 2px; display: inline-block; }
+
+.note { color: var(--muted); font-size: .82rem; margin: .6rem 0 0; }
+
+.throughput-values { display: flex; gap: 2rem; flex-wrap: wrap; }
+.throughput-values > div { display: grid; gap: .15rem; }
+.throughput-values .label { color: var(--muted); font-size: .78rem; text-transform: uppercase; letter-spacing: .06em; }
+.throughput-values strong { font-size: 1.5rem; font-weight: 500; font-variant-numeric: tabular-nums; }
+
+/* Bufferbloat: idle vs loaded latency drawn to scale against each other, so
+   the size of the problem is visible rather than needing to be read. */
+.bloat-row { display: flex; align-items: center; gap: .75rem; margin: .45rem 0; }
+.bloat-row .name { width: 9rem; color: var(--muted); font-size: .82rem; flex: none; }
+.bloat-row .bar { height: 1.4rem; border-radius: 3px; min-width: 2px; }
+.bloat-row .val { font-variant-numeric: tabular-nums; font-size: .85rem; }
+.bloat-idle { background: var(--accent); }
+.bloat-loaded { background: var(--bad); }
+.verdict { margin: .9rem 0 0; padding: .65rem .8rem; border-radius: 6px;
+  background: rgba(163,44,44,.1); border: 1px solid rgba(163,44,44,.25); font-size: .85rem; }
+.verdict.ok { background: rgba(47,111,78,.1); border-color: rgba(47,111,78,.3); }
+.verdict strong { display: block; margin-bottom: .2rem; }
+
+table.layers-t { width: 100%; border-collapse: collapse; font-size: .84rem; }
+table.layers-t th { text-align: right; color: var(--muted); font-weight: 500;
+  padding: .3rem .5rem; border-bottom: 1px solid var(--line); font-size: .78rem; }
+table.layers-t th:first-child, table.layers-t td:first-child { text-align: left; }
+table.layers-t td { text-align: right; padding: .3rem .5rem;
+  border-bottom: 1px solid var(--line); font-variant-numeric: tabular-nums; }
+table.layers-t tr:last-child td { border-bottom: 0; }
+.layers h3 { font-size: .78rem; text-transform: uppercase; letter-spacing: .06em;
+  color: var(--muted); margin: 1rem 0 .3rem; font-weight: 600; }
+.layers h3:first-child { margin-top: 0; }
+
+.events { list-style: none; margin: 0; padding: 0; max-height: 260px; overflow-y: auto; }
+.events li {
+  display: flex;
+  gap: .75rem;
+  padding: .3rem 0;
+  border-bottom: 1px solid var(--line);
+  font-variant-numeric: tabular-nums;
+}
+.events li:last-child { border-bottom: 0; }
+.events time { color: var(--muted); white-space: nowrap; }
+.events .kind { font-weight: 600; }
+.events .empty { color: var(--muted); }
+
+footer { padding: 0 1.25rem; color: var(--muted); font-size: .8rem; max-width: 1100px; margin: 0 auto; }
+
+.u-tooltip {
+  position: absolute;
+  pointer-events: none;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: .4rem .55rem;
+  font-size: .8rem;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  z-index: 3;
+}
+
+.u-over { z-index: 2; }

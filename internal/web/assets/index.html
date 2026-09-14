@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>netwatch</title>
+<link rel="stylesheet" href="uPlot.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <h1>netwatch</h1>
+  <div class="net" id="net">…</div>
+  <nav id="ranges">
+    <button data-range="3600">1h</button>
+    <button data-range="21600" class="on">6h</button>
+    <button data-range="86400">24h</button>
+    <button data-range="604800">7d</button>
+    <button data-range="2592000">30d</button>
+  </nav>
+</header>
+
+<main>
+  <section id="tiles" class="tiles"></section>
+
+  <section class="card">
+    <h2>Latency <span class="sub">line is the median, shading reaches the 99th percentile</span></h2>
+    <div id="legend-rtt" class="legend"></div>
+    <div id="chart-rtt" class="chart"></div>
+    <p class="note">Log scale — a home link spans milliseconds to seconds, and a linear axis hides the small end.</p>
+  </section>
+
+  <section class="card">
+    <h2>Packet loss <span class="sub">shading is the 95% confidence interval</span></h2>
+    <div id="legend-loss" class="legend"></div>
+    <div id="chart-loss" class="chart"></div>
+    <p class="note" id="loss-note"></p>
+  </section>
+
+  <section class="card" id="wifi-card" hidden>
+    <h2>Wi-Fi signal <span class="sub">signal-to-noise margin at the radio</span></h2>
+    <div id="wifi-now"></div>
+    <div id="chart-wifi" class="chart"></div>
+    <p class="note">Compare dips here against the latency chart above: jitter that
+      coincides with a drop in this line is the radio, not the line.</p>
+  </section>
+
+  <section class="card" id="throughput-card" hidden>
+    <h2>Internet speed <span class="sub">latest capacity test</span></h2>
+    <div id="legend-throughput" class="legend"></div>
+    <div id="chart-throughput" class="chart"></div>
+    <div id="throughput"></div>
+  </section>
+
+  <section class="card" id="bloat-card" hidden>
+    <h2>Under load <span class="sub">what happens to latency when the link is saturated</span></h2>
+    <div id="bloat"></div>
+  </section>
+
+  <section class="card">
+    <h2>Where the time goes <span class="sub">resolution, handshake and first byte</span></h2>
+    <div id="layers" class="layers"></div>
+  </section>
+
+  <section class="card">
+    <h2>Events</h2>
+    <ul id="events" class="events"></ul>
+  </section>
+</main>
+
+<footer>
+  <span id="meta"></span>
+</footer>
+
+<script src="uPlot.iife.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
