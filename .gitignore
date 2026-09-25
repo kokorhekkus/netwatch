@@ -1,0 +1,4 @@
+/netwatch
+*.db
+*.db-wal
+*.db-shm
